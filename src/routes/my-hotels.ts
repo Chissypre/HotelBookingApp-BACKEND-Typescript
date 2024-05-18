@@ -42,10 +42,10 @@ router.post(
       //1. upload the images to cloundinary
 
       const uploadPromises = imageFiles.map(async (image) => {
-        const b64 = Buffer.from(image.buffer).toString("base64");
-        let dataURI = "data" + image.mimetype + ";base64" + b64;
-        const res = await cloudinary.v2.uploader.upload(dataURI);
-        return res.url;
+        const b64 = image.buffer.toString("base64");
+        const dataURI = `data:${image.mimetype};base64,${b64}`;
+        const uploadResponse = await cloudinary.v2.uploader.upload(dataURI);
+        return uploadResponse.url;
       });
 
       //2. if upload was successful, add the URLs to the new hotel
