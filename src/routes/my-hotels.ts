@@ -67,4 +67,15 @@ router.post(
   }
 );
 
+router.get ("/", verifyToken,  async (req: Request, res: Response) => {
+
+  try{
+  const hotels = await Hotel.find({userId:req.userId})
+  res.json(hotels);
+  }catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Error Fetching Hotels" });
+      }
+  }) 
+
 export default router;
